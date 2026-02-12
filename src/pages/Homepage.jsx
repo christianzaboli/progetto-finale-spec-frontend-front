@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 export default function Homepage() {
   const navigate = useNavigate();
   // import dati
-  const { services, categories } = useGlobalContext();
+  const { services, categories, compareIds, handleAddToCompare } =
+    useGlobalContext();
 
   // filtri
   const [titleSearch, setTitleSearch] = useState("");
@@ -87,10 +88,22 @@ export default function Homepage() {
       {memoedServices.length > 0 && (
         <ul className="services-list">
           {memoedServices.map((s) => (
-            <li key={s.id} onClick={() => navigate(`/services/${s.id}`)}>
+            <li key={s.id}>
               <p>
                 {s.title} - {s.category}
               </p>
+              <label className="compare-btn-label">
+                Compare
+                <input
+                  className="compare-btn"
+                  type="checkbox"
+                  checked={compareIds.includes(s.id)}
+                  onChange={() => handleAddToCompare(s.id)}
+                ></input>
+              </label>
+              <button onClick={() => navigate(`/services/${s.id}`)}>
+                Dettagli
+              </button>
             </li>
           ))}
         </ul>

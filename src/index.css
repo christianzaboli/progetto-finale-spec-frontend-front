@@ -19,7 +19,6 @@ body {
 }
 .services-list li {
   padding: 2rem;
-  cursor: pointer;
   &:hover {
     background-color: rgb(241, 241, 241);
   }
@@ -39,4 +38,30 @@ nav menu ul li a {
   &.active {
     font-weight: bold;
   }
+}
+.compare-btn,
+.compare-btn-label {
+  cursor: pointer;
+  &:hover {
+    color: #05f;
+  }
+}
+.compare-container {
+  position: fixed;
+  bottom: 0;
+  height: 0px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.178);
+  pointer-events: none;
+  transition: all ease 0.4s;
+  &.active {
+    height: 125px;
+    transition: all ease 0.4s;
+  }
+}
+.compare-container-visibility {
+  position: fixed;
+  z-index: 100;
+  bottom: 20px;
+  right: 20px;
 }

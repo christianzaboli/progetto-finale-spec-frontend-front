@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 export default function ServiceDetail() {
-  const { getDetailedMovie } = useGlobalContext();
+  const { getDetailedService, compareIds, handleAddToCompare } =
+    useGlobalContext();
   const paramsId = useParams();
-
+  const navigate = useNavigate();
   // servizio selezionato
   const [service, setService] = useState([]);
 
   // fetch al montaggio del servizio richiesto
   useEffect(() => {
-    getDetailedMovie(parseInt(paramsId.id)).then((res) =>
-      setService(res.service),
-    );
+    getDetailedService(parseInt(paramsId.id)).then((res) => {
+      if (!res) {
+        navigate("/");
+      }
+      setService(res.service);
+    });
   }, []);
   return (
     <>
@@ -53,6 +57,15 @@ export default function ServiceDetail() {
               })}
             </ul>
           </section>
+          <label className="compare-btn-label">
+            Compare
+            <input
+              className="compare-btn"
+              type="checkbox"
+              checked={compareIds.includes(service.id)}
+              onChange={() => handleAddToCompare(service.id)}
+            ></input>
+          </label>
         </div>
       )}
     </>
