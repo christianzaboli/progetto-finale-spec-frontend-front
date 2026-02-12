@@ -25,8 +25,14 @@ export default function GlobalProvider({ children }) {
     }
     return acc;
   }, []);
+
+  const getDetailedMovie = async (id) => {
+    const response = await fetch(`http://localhost:3001/services/${id}`);
+    const data = await response.json();
+    return data;
+  };
   return (
-    <GlobalContext.Provider value={{ services, categories }}>
+    <GlobalContext.Provider value={{ services, categories, getDetailedMovie }}>
       {children}
     </GlobalContext.Provider>
   );

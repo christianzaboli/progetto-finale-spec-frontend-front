@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
+import { useNavigate } from "react-router-dom";
 export default function Homepage() {
+  const navigate = useNavigate();
   // import dati
   const { services, categories } = useGlobalContext();
 
@@ -10,7 +12,7 @@ export default function Homepage() {
 
   // ordinamento
   const [sortOrder, setSortOrder] = useState({
-    order: 1,
+    order: 0,
     text: "Ordina dalla A-Z",
   });
 
@@ -70,7 +72,7 @@ export default function Homepage() {
         className={"sortAZ"}
         onClick={() => {
           setSortOrder((prev) => ({
-            order: prev.order * -1,
+            order: prev.order === 0 ? 1 : prev.order * -1,
             text:
               prev.text === "Ordina dalla A-Z"
                 ? "Ordina dalla Z-A"
@@ -81,11 +83,14 @@ export default function Homepage() {
         <p>{sortOrder.text}</p>
       </div>
 
+      {/* lista servizi */}
       {memoedServices.length > 0 && (
-        <ul>
+        <ul className="services-list">
           {memoedServices.map((s) => (
-            <li key={s.id}>
-              {s.title} - {s.category}
+            <li key={s.id} onClick={() => navigate(`/services/${s.id}`)}>
+              <p>
+                {s.title} - {s.category}
+              </p>
             </li>
           ))}
         </ul>

@@ -12,3 +12,31 @@ body {
   padding: 0.5rem;
   cursor: pointer;
 }
+.services-list {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 10px;
+}
+.services-list li {
+  padding: 2rem;
+  cursor: pointer;
+  &:hover {
+    background-color: rgb(241, 241, 241);
+  }
+}
+nav menu ul {
+  display: flex;
+  justify-content: flex-end;
+}
+nav menu ul li {
+  padding: 1rem;
+  list-style: none;
+}
+
+nav menu ul li a {
+  text-decoration: none;
+  color: black;
+  &.active {
+    font-weight: bold;
+  }
+}
