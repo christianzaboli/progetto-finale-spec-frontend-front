@@ -1,6 +1,6 @@
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 
 // components
 import FastCompare from "../components/FastCompare";
@@ -46,6 +46,7 @@ export default function DefaultLayout() {
 
   return (
     <>
+      {/* NAVBAR */}
       <header>
         <nav>
           <menu>
@@ -60,13 +61,17 @@ export default function DefaultLayout() {
           </menu>
         </nav>
       </header>
+
+      {/* MAIN CONTENT */}
       <main>
         <Outlet />
       </main>
+
+      {/* COMPARE SECTION */}
       <div style={{ position: "relative" }}>
         <button
           onClick={toDetailedPage}
-          style={{ display: compareIds.length > 0 ? "inline-block" : "none" }}
+          style={{ opacity: compareIds.length > 0 ? "100" : "0" }}
           className="compare-in-detail-btn"
         >
           Compara nel dettaglio
@@ -74,6 +79,7 @@ export default function DefaultLayout() {
         <button
           onClick={handleVisible}
           className="compare-container-visibility"
+          style={{ opacity: compareIds.length > 0 ? "100" : "0" }}
         >
           {compareBtnText}
         </button>

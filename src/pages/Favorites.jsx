@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
+import { Link } from "react-router-dom";
 
 export default function Favorites() {
   const { favs } = useGlobalContext();
@@ -23,8 +24,17 @@ export default function Favorites() {
   return (
     <div className="page">
       <h1>Pagina dei preferiti</h1>
+
       {favoritesList.length > 0 ? (
-        favoritesList.map((f) => <p key={f.id}>{f.title}</p>)
+        <ul>
+          {favoritesList.map((f) => (
+            <li>
+              <Link key={f.id} to={`/services/${f.id}`}>
+                {f.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
       ) : (
         <div>
           <p>Nessuno elemento aggiunto ai preferiti</p>
