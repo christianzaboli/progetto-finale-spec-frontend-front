@@ -1,13 +1,19 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useEffect, useState, useRef } from "react";
+
+// components
+import FastCompare from "../components/FastCompare";
+
 export default function DefaultLayout() {
-  const { compareIds, getComparingList } = useGlobalContext();
+  const { compareIds, getComparingList, removeFromCompare } =
+    useGlobalContext();
   const [itemsCompared, setItemCompared] = useState([]);
   const [compareBtnText, setcompareBtnTextText] = useState("Apri vs");
   const [compareContainer, setCompareContainer] = useState("compare-container");
-  const compareContainerRef = useRef();
+  const navigate = useNavigate();
 
+  //  gestione fast compare e fetch di elementi da comparare
   useEffect(() => {
     if (compareIds.length === 0) {
       setItemCompared([]);
@@ -20,6 +26,7 @@ export default function DefaultLayout() {
     setcompareBtnTextText("Chiudi vs");
   }, [compareIds]);
 
+  // Click btn per mostrare fast compare
   const handleVisible = () => {
     if (compareContainer === "compare-container") {
       setCompareContainer("compare-container active");
@@ -29,6 +36,14 @@ export default function DefaultLayout() {
       setcompareBtnTextText("Apri vs");
     }
   };
+
+  // Click btn per andare al compare dettagliato
+  const toDetailedPage = () => {
+    setCompareContainer("compare-container");
+    setcompareBtnTextText("Apri vs");
+    navigate("/comparing");
+  };
+
   return (
     <>
       <header>
@@ -47,15 +62,27 @@ export default function DefaultLayout() {
       </header>
       <main>
         <Outlet />
+      </main>
+      <div style={{ position: "relative" }}>
+        <button
+          onClick={toDetailedPage}
+          style={{ display: compareIds.length > 0 ? "inline-block" : "none" }}
+          className="compare-in-detail-btn"
+        >
+          Compara nel dettaglio
+        </button>
         <button
           onClick={handleVisible}
           className="compare-container-visibility"
         >
           {compareBtnText}
         </button>
-      </main>
-      <div className={compareContainer}></div>
-      {/* <footer></footer> */}
+      </div>
+      <FastCompare
+        visibility={compareContainer}
+        list={itemsCompared}
+        remove={removeFromCompare}
+      ></FastCompare>
     </>
   );
 }

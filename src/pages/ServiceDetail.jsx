@@ -2,14 +2,8 @@ import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useParams, useNavigate } from "react-router-dom";
 export default function ServiceDetail() {
-  const {
-    getDetailedService,
-    compareIds,
-    handleAddToCompare,
-    addFavorite,
-    favs,
-    setFavs,
-  } = useGlobalContext();
+  const { getDetailedService, compareIds, handleAddToCompare, favs, setFavs } =
+    useGlobalContext();
   const paramsId = useParams();
   const navigate = useNavigate();
   // servizio selezionato

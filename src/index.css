@@ -230,6 +230,8 @@ button:active {
   pointer-events: none;
   transition: all ease 0.4s;
   z-index: 99;
+  display: flex;
+  flex-flow: row nowrap;
 }
 
 .compare-container.active {
@@ -238,29 +240,56 @@ button:active {
   transition: all ease 0.4s;
 }
 
-.compare-container-visibility {
+.compare-container-visibility,
+.compare-in-detail-btn {
   position: fixed;
   z-index: 100;
-  bottom: 20px;
+  bottom: 150px;
   right: 20px;
-  padding: 12px 24px;
+  padding: 8px 15px;
   background: #666;
   color: white;
   border: none;
   border-radius: 50px;
   cursor: pointer;
-  font-weight: 600;
-  font-size: 0.95rem;
+  font-weight: 500;
+  font-size: 0.85rem;
   transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-
+.compare-in-detail-btn {
+  bottom: 200px;
+}
 .compare-container-visibility:hover {
-  /* background: #555; */
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+.fast-compare-item {
+  position: relative;
+  width: 100%;
+  background-color: #8fc6ca9c;
+  list-style: none;
+  max-width: 30%;
+  padding: 10px;
+}
+.fast-compare-container {
+  padding: 1.5rem;
+  display: flex;
+  width: -webkit-fill-available;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  gap: 20px;
+}
+.fast-compare-item-contents {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+}
+.fast-compare-item-contents li {
+  list-style: none;
+}
 /* ==================== PAGE CONTAINER ==================== */
 .page {
   background: rgba(255, 255, 255, 0.8);
