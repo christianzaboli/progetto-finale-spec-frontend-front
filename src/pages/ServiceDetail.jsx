@@ -2,8 +2,14 @@ import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useParams, useNavigate } from "react-router-dom";
 export default function ServiceDetail() {
-  const { getDetailedService, compareIds, handleAddToCompare } =
-    useGlobalContext();
+  const {
+    getDetailedService,
+    compareIds,
+    handleAddToCompare,
+    addFavorite,
+    favs,
+    setFavs,
+  } = useGlobalContext();
   const paramsId = useParams();
   const navigate = useNavigate();
   // servizio selezionato
@@ -66,6 +72,16 @@ export default function ServiceDetail() {
               onChange={() => handleAddToCompare(service.id)}
             ></input>
           </label>
+          <button onClick={() => addFavorite(service.id)}>
+            Aggiungi ai preferiti
+          </button>
+          {favs.includes(service.id) && (
+            <button
+              onClick={() => setFavs(favs.filter((f) => f !== service.id))}
+            >
+              Rimuovi dai preferiti
+            </button>
+          )}
         </div>
       )}
     </>

@@ -4,8 +4,14 @@ import { useNavigate } from "react-router-dom";
 export default function Homepage() {
   const navigate = useNavigate();
   // import dati
-  const { services, categories, compareIds, handleAddToCompare } =
-    useGlobalContext();
+  const {
+    services,
+    categories,
+    compareIds,
+    handleAddToCompare,
+    setFavs,
+    favs,
+  } = useGlobalContext();
 
   // filtri
   const [titleSearch, setTitleSearch] = useState("");
@@ -104,6 +110,14 @@ export default function Homepage() {
               <button onClick={() => navigate(`/services/${s.id}`)}>
                 Dettagli
               </button>
+              <button onClick={() => setFavs([...favs, s.id])}>
+                Aggiungi ai preferiti
+              </button>
+              {favs.includes(s.id) && (
+                <button onClick={() => setFavs(favs.filter((f) => f !== s.id))}>
+                  Rimuoi dai preferiti
+                </button>
+              )}
             </li>
           ))}
         </ul>

@@ -4,28 +4,30 @@ import { useEffect, useState, useRef } from "react";
 export default function DefaultLayout() {
   const { compareIds, getComparingList } = useGlobalContext();
   const [itemsCompared, setItemCompared] = useState([]);
-  const [compareBtn, setCompareBtn] = useState("Apri vs");
+  const [compareBtnText, setcompareBtnTextText] = useState("Apri vs");
   const [compareContainer, setCompareContainer] = useState("compare-container");
   const compareContainerRef = useRef();
 
   useEffect(() => {
     if (compareIds.length === 0) {
       setItemCompared([]);
+      setcompareBtnTextText("Apri vs");
       setCompareContainer("compare-container");
       return;
     }
     getComparingList().then((res) => setItemCompared(res));
     setCompareContainer("compare-container active");
+    setcompareBtnTextText("Chiudi vs");
     console.log(itemsCompared);
   }, [compareIds]);
 
   const handleVisible = () => {
     if (compareContainer === "compare-container") {
       setCompareContainer("compare-container active");
-      setCompareBtn("Chiudi vs");
+      setcompareBtnTextText("Chiudi vs");
     } else {
       setCompareContainer("compare-container");
-      setCompareBtn("Apri vs");
+      setcompareBtnTextText("Apri vs");
     }
   };
   return (
@@ -50,7 +52,7 @@ export default function DefaultLayout() {
           onClick={handleVisible}
           className="compare-container-visibility"
         >
-          {compareBtn}
+          {compareBtnText}
         </button>
 
         <div className={compareContainer}></div>
