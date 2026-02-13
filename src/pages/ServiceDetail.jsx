@@ -63,26 +63,32 @@ export default function ServiceDetail() {
               })}
             </ul>
           </section>
-          <label className="compare-btn-label">
-            Compare
-            <input
-              className="compare-btn"
-              type="checkbox"
-              checked={compareIds.includes(service.id)}
-              onChange={() => handleAddToCompare(service.id)}
-            ></input>
-          </label>
-          <button onClick={() => setFavs([...favs, service.id])}>
-            Aggiungi ai preferiti
-          </button>
-
-          {favs.includes(service.id) && (
+          <div className="details-buttons">
+            <label className="compare-btn-label">
+              Compare
+              <input
+                className="compare-btn"
+                type="checkbox"
+                checked={compareIds.includes(service.id)}
+                onChange={() => handleAddToCompare(service.id)}
+              ></input>
+            </label>
             <button
-              onClick={() => setFavs(favs.filter((f) => f !== service.id))}
+              onClick={() => setFavs([...favs, service.id])}
+              enabled
+              disabled={favs.includes(service.id)}
             >
-              Rimuovi dai preferiti
+              Aggiungi ai preferiti
             </button>
-          )}
+
+            {favs.includes(service.id) && (
+              <button
+                onClick={() => setFavs(favs.filter((f) => f !== service.id))}
+              >
+                Rimuovi dai preferiti
+              </button>
+            )}
+          </div>
         </div>
       )}
     </>

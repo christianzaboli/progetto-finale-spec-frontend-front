@@ -23,17 +23,12 @@ body {
 /* ==================== HEADER & NAV ==================== */
 header {
   background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
   position: sticky;
   top: 0;
   z-index: 50;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(4px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 32px rgba(0, 0, 0, 0.08);
   gap: 2rem;
   list-style: none;
   padding: 1.5rem;
@@ -90,10 +85,7 @@ select {
   padding: 12px 16px;
   margin-bottom: 1rem;
   background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px9);
   backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 12px;
   font-size: 1rem;
@@ -121,10 +113,7 @@ select option {
   padding: 12px 20px;
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px9);
   backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 12px;
   font-weight: 600;
@@ -156,9 +145,7 @@ select option {
 .services-list li {
   padding: 1.5rem;
   background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
   backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 16px;
   transition: all 0.3s ease;
@@ -172,7 +159,6 @@ select option {
 .services-list li:hover {
   background: rgba(255, 255, 255, 0.95);
   border-color: rgba(0, 0, 0, 0.12);
-  /* transform: translateY(-2px); */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
@@ -188,10 +174,8 @@ button {
   padding: 10px 16px;
   margin-right: 0.5rem;
   margin-bottom: 0.5rem;
-  /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
-  color: white#666;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   cursor: pointer;
   font-weight: 600;
   font-size: 0.95rem;
@@ -199,16 +183,19 @@ button {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-button:hover {
-  background: #999999;
+button:hover:enabled {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 button:active {
   transform: translateY(0);
 }
-
+.details-buttons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 /* ==================== COMPARE BUTTON & CHECKBOX ==================== */
 .compare-btn-label {
   display: inline-flex;
@@ -238,7 +225,6 @@ button:active {
   height: 0px;
   width: 100%;
   backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   border-top: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.05);
   pointer-events: none;
@@ -270,7 +256,7 @@ button:active {
 }
 
 .compare-container-visibility:hover {
-  background: #555;
+  /* background: #555; */
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
@@ -279,11 +265,9 @@ button:active {
 .page {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
   backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 20px;
   padding: 2rem;
@@ -302,12 +286,10 @@ button:active {
 footer {
   background-color: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border-top: 1px solid rgba(255, 255, 255, 0.18);
   padding: 2rem;
   margin-top: 4rem;
   backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   border-top: 1px solid rgba(0, 0, 0, 0.08);
   padding: 2rem;
   margin-top: 4rem;

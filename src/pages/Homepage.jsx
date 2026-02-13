@@ -63,80 +63,87 @@ export default function Homepage() {
   // RENDER ZZZZZONE --------------------------------
   return (
     <>
-      <h1>Benvenuto nel comparatore!</h1>
+      <div className="page">
+        <h1>Benvenuto nel comparatore!</h1>
 
-      {/* ricerca */}
-      <input
-        type="text"
-        placeholder="Cerca il titolo della piattaforma..."
-        // value={titleSearch}
-        onChange={(e) => debouncedSearch(e.target.value)}
-      />
+        {/* ricerca */}
+        <input
+          type="text"
+          placeholder="Cerca il titolo della piattaforma..."
+          // value={titleSearch}
+          onChange={(e) => debouncedSearch(e.target.value)}
+        />
 
-      {/* filtro categoria */}
-      <select
-        name={categories}
-        onChange={(e) => setCategoryFilter(e.target.value)}
-      >
-        <option value={""}>Seleziona una categoria</option>
-        {categories?.length > 0 &&
-          categories.map((c, i) => {
-            return (
-              <option value={c} key={i}>
-                {c}
-              </option>
-            );
-          })}
-      </select>
+        {/* filtro categoria */}
+        <select
+          name={categories}
+          onChange={(e) => setCategoryFilter(e.target.value)}
+        >
+          <option value={""}>Seleziona una categoria</option>
+          {categories?.length > 0 &&
+            categories.map((c, i) => {
+              return (
+                <option value={c} key={i}>
+                  {c}
+                </option>
+              );
+            })}
+        </select>
 
-      {/* ordimanto */}
-      <div
-        className={"sortAZ"}
-        onClick={() => {
-          setSortOrder((prev) => ({
-            order: prev.order === 0 ? 1 : prev.order * -1,
-            text:
-              prev.text === "Ordina dalla A-Z"
-                ? "Ordina dalla Z-A"
-                : "Ordina dalla A-Z",
-          }));
-        }}
-      >
-        <p>{sortOrder.text}</p>
-      </div>
+        {/* ordimanto */}
+        <div
+          className={"sortAZ"}
+          onClick={() => {
+            setSortOrder((prev) => ({
+              order: prev.order === 0 ? 1 : prev.order * -1,
+              text:
+                prev.text === "Ordina dalla A-Z"
+                  ? "Ordina dalla Z-A"
+                  : "Ordina dalla A-Z",
+            }));
+          }}
+        >
+          <p>{sortOrder.text}</p>
+        </div>
 
-      {/* lista servizi */}
-      {memoedServices.length > 0 && (
-        <ul className="services-list">
-          {memoedServices.map((s) => (
-            <li key={s.id}>
-              <p>
-                {s.title} - {s.category}
-              </p>
-              <label className="compare-btn-label">
-                Compare
-                <input
-                  className="compare-btn"
-                  type="checkbox"
-                  checked={compareIds.includes(s.id)}
-                  onChange={() => handleAddToCompare(s.id)}
-                ></input>
-              </label>
-              <button onClick={() => navigate(`/services/${s.id}`)}>
-                Dettagli
-              </button>
-              <button onClick={() => setFavs([...favs, s.id])}>
-                Aggiungi ai preferiti
-              </button>
-              {favs.includes(s.id) && (
-                <button onClick={() => setFavs(favs.filter((f) => f !== s.id))}>
-                  Rimuovi dai preferiti
+        {/* lista servizi */}
+        {memoedServices.length > 0 && (
+          <ul className="services-list">
+            {memoedServices.map((s) => (
+              <li key={s.id}>
+                <p>
+                  {s.title} - {s.category}
+                </p>
+                <label className="compare-btn-label">
+                  Compare
+                  <input
+                    className="compare-btn"
+                    type="checkbox"
+                    checked={compareIds.includes(s.id)}
+                    onChange={() => handleAddToCompare(s.id)}
+                  ></input>
+                </label>
+                <button onClick={() => navigate(`/services/${s.id}`)}>
+                  Dettagli
                 </button>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+                <button
+                  onClick={() => setFavs([...favs, s.id])}
+                  disabled={favs.includes(s.id)}
+                >
+                  Aggiungi ai preferiti
+                </button>
+                {favs.includes(s.id) && (
+                  <button
+                    onClick={() => setFavs(favs.filter((f) => f !== s.id))}
+                  >
+                    Rimuovi dai preferiti
+                  </button>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </>
   );
 }
