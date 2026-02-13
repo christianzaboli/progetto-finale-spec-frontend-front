@@ -72,9 +72,10 @@ export default function ServiceDetail() {
               onChange={() => handleAddToCompare(service.id)}
             ></input>
           </label>
-          <button onClick={() => addFavorite(service.id)}>
+          <button onClick={() => setFavs([...favs, service.id])}>
             Aggiungi ai preferiti
           </button>
+
           {favs.includes(service.id) && (
             <button
               onClick={() => setFavs(favs.filter((f) => f !== service.id))}

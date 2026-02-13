@@ -53,10 +53,9 @@ export default function DefaultLayout() {
         >
           {compareBtnText}
         </button>
-
-        <div className={compareContainer}></div>
       </main>
-      <footer></footer>
+      <div className={compareContainer}></div>
+      {/* <footer></footer> */}
     </>
   );
 }
