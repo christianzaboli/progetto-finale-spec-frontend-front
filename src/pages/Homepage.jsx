@@ -1,6 +1,18 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useNavigate } from "react-router-dom";
+
+// debounce base
+function debounce(fn, time) {
+  let timer;
+  return (value) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn(value);
+    }, time);
+  };
+}
+
 export default function Homepage() {
   const navigate = useNavigate();
   // import dati
@@ -16,6 +28,9 @@ export default function Homepage() {
   // filtri
   const [titleSearch, setTitleSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
+
+  // attivazione useCallback + debounce
+  const debouncedSearch = useCallback(debounce(setTitleSearch, 200), []);
 
   // ordinamento
   const [sortOrder, setSortOrder] = useState({
@@ -54,8 +69,8 @@ export default function Homepage() {
       <input
         type="text"
         placeholder="Cerca il titolo della piattaforma..."
-        value={titleSearch}
-        onChange={(e) => setTitleSearch(e.target.value)}
+        // value={titleSearch}
+        onChange={(e) => debouncedSearch(e.target.value)}
       />
 
       {/* filtro categoria */}
@@ -115,7 +130,7 @@ export default function Homepage() {
               </button>
               {favs.includes(s.id) && (
                 <button onClick={() => setFavs(favs.filter((f) => f !== s.id))}>
-                  Rimuoi dai preferiti
+                  Rimuovi dai preferiti
                 </button>
               )}
             </li>

@@ -18,7 +18,6 @@ export default function DefaultLayout() {
     getComparingList().then((res) => setItemCompared(res));
     setCompareContainer("compare-container active");
     setcompareBtnTextText("Chiudi vs");
-    console.log(itemsCompared);
   }, [compareIds]);
 
   const handleVisible = () => {
