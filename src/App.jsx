@@ -3,7 +3,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import ServiceDetail from "./pages/ServiceDetail";
 import Favorites from "./pages/Favorites";
-import NotFound from "./pages/notFound";
+import NotFound from "./pages/NotFound";
 import DefaultLayout from "./layout/DefaultLayout";
 import Comparing from "./pages/Comparing";
 function App() {

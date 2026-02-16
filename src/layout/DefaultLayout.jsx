@@ -1,7 +1,6 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useEffect, useState } from "react";
-
 // components
 import FastCompare from "../components/FastCompare";
 
@@ -11,7 +10,7 @@ export default function DefaultLayout() {
   const [itemsCompared, setItemCompared] = useState([]);
   const [compareContainer, setCompareContainer] = useState("compare-container");
   const navigate = useNavigate();
-
+  const location = useLocation();
   //  gestione fast compare e fetch di elementi da comparare
   useEffect(() => {
     if (compareIds.length === 0) {
@@ -22,6 +21,12 @@ export default function DefaultLayout() {
     getComparingList().then((res) => setItemCompared(res));
     setCompareContainer("compare-container active");
   }, [compareIds]);
+
+  // visibilita del drawer di compare rapido
+  const [isOnComparePage, setIsOnComparePage] = useState(false);
+  useEffect(() => {
+    setIsOnComparePage(location.pathname === "/comparing" ? true : false);
+  }, [location]);
 
   // Click btn per mostrare fast compare
   const handleVisible = () => {
@@ -62,27 +67,40 @@ export default function DefaultLayout() {
       </main>
 
       {/* COMPARE SECTION */}
-      <div style={{ position: "relative" }}>
-        <button
-          onClick={toDetailedPage}
-          style={{ opacity: compareIds.length > 1 ? "100" : "0" }}
-          className="compare-in-detail-btn"
-        >
-          Compara nel dettaglio
-        </button>
-        <button
-          onClick={handleVisible}
-          className="compare-container-visibility"
-          style={{ opacity: compareIds.length > 0 ? "100" : "0" }}
-        >
-          {compareContainer === "compare-container" ? "Apri" : "Chiudi"}
-        </button>
+      <button
+        className="scroll-to-top-btn"
+        style={{}}
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      >
+        Torna su
+      </button>
+      <div style={{ display: isOnComparePage ? "none" : "block" }}>
+        <div style={{ position: "relative" }}>
+          <button
+            onClick={toDetailedPage}
+            style={{
+              display: compareIds.length > 1 ? "block" : "none",
+            }}
+            className="compare-in-detail-btn"
+          >
+            Compara nel dettaglio
+          </button>
+          <button
+            onClick={handleVisible}
+            className="compare-container-visibility"
+            style={{
+              display: compareIds.length > 0 ? "block" : "none",
+            }}
+          >
+            {compareContainer === "compare-container" ? "Apri" : "Chiudi"}
+          </button>
+        </div>
+        <FastCompare
+          visibility={compareContainer}
+          list={itemsCompared}
+          remove={removeFromCompare}
+        ></FastCompare>
       </div>
-      <FastCompare
-        visibility={compareContainer}
-        list={itemsCompared}
-        remove={removeFromCompare}
-      ></FastCompare>
     </>
   );
 }

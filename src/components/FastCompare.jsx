@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 export default function FastCompare({ visibility, list, remove }) {
   return (
     <div className={visibility}>
@@ -31,22 +29,6 @@ export default function FastCompare({ visibility, list, remove }) {
               >
                 X
               </div>
-
-              {/* redirect al sito */}
-              <Link
-                to={item.website}
-                style={{
-                  color: "#333",
-                  textDecoration: "none",
-                  position: "absolute",
-                  bottom: "0px",
-                  right: "5px",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                }}
-              >
-                Sito
-              </Link>
             </div>
           </li>
         ))}

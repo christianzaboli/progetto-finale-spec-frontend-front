@@ -65,45 +65,46 @@ export default function Homepage() {
     <>
       <div className="page">
         <h1>Benvenuto nel comparatore!</h1>
+        <div>
+          {/* ricerca */}
+          <input
+            type="text"
+            placeholder="Cerca il titolo della piattaforma..."
+            onChange={(e) => debouncedSearch(e.target.value)}
+          />
+          <div>
+            {/* filtro categoria */}
+            <select
+              name={categories}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+            >
+              <option value={""}>Seleziona una categoria</option>
+              {categories?.length > 0 &&
+                categories.map((c, i) => {
+                  return (
+                    <option value={c} key={i}>
+                      {c}
+                    </option>
+                  );
+                })}
+            </select>
 
-        {/* ricerca */}
-        <input
-          type="text"
-          placeholder="Cerca il titolo della piattaforma..."
-          // value={titleSearch}
-          onChange={(e) => debouncedSearch(e.target.value)}
-        />
-
-        {/* filtro categoria */}
-        <select
-          name={categories}
-          onChange={(e) => setCategoryFilter(e.target.value)}
-        >
-          <option value={""}>Seleziona una categoria</option>
-          {categories?.length > 0 &&
-            categories.map((c, i) => {
-              return (
-                <option value={c} key={i}>
-                  {c}
-                </option>
-              );
-            })}
-        </select>
-
-        {/* ordimanto */}
-        <div
-          className={"sortAZ"}
-          onClick={() => {
-            setSortOrder((prev) => ({
-              order: prev.order === 0 ? 1 : prev.order * -1,
-              text:
-                prev.text === "Ordina dalla A-Z"
-                  ? "Ordina dalla Z-A"
-                  : "Ordina dalla A-Z",
-            }));
-          }}
-        >
-          <p>{sortOrder.text}</p>
+            {/* ordimanto */}
+            <div
+              className={"sortAZ"}
+              onClick={() => {
+                setSortOrder((prev) => ({
+                  order: prev.order === 0 ? 1 : prev.order * -1,
+                  text:
+                    prev.text === "Ordina dalla A-Z"
+                      ? "Ordina dalla Z-A"
+                      : "Ordina dalla A-Z",
+                }));
+              }}
+            >
+              <p>{sortOrder.text}</p>
+            </div>
+          </div>
         </div>
 
         {/* lista servizi */}
@@ -112,10 +113,11 @@ export default function Homepage() {
             {memoedServices.map((s) => (
               <li key={s.id}>
                 <p>
-                  {s.title} - {s.category}
+                  {s.title}
+                  {/* - {s.category} */}
                 </p>
                 <label className="compare-btn-label">
-                  Compare
+                  Compara
                   <input
                     className="compare-btn"
                     type="checkbox"
@@ -134,6 +136,7 @@ export default function Homepage() {
                 </button>
                 {favs.includes(s.id) && (
                   <button
+                    className="btn-fav-home"
                     onClick={() => setFavs(favs.filter((f) => f !== s.id))}
                   >
                     Rimuovi dai preferiti
