@@ -69,7 +69,7 @@ export default function ServiceDetail() {
             </label>
             <button
               onClick={() => setFavs([...favs, service.id])}
-              enabled
+              enabled="true"
               disabled={favs.includes(service.id)}
             >
               Aggiungi ai preferiti

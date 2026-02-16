@@ -9,7 +9,6 @@ export default function DefaultLayout() {
   const { compareIds, getComparingList, removeFromCompare } =
     useGlobalContext();
   const [itemsCompared, setItemCompared] = useState([]);
-  const [compareBtnText, setcompareBtnTextText] = useState("Apri vs");
   const [compareContainer, setCompareContainer] = useState("compare-container");
   const navigate = useNavigate();
 
@@ -17,30 +16,25 @@ export default function DefaultLayout() {
   useEffect(() => {
     if (compareIds.length === 0) {
       setItemCompared([]);
-      setcompareBtnTextText("Apri vs");
       setCompareContainer("compare-container");
       return;
     }
     getComparingList().then((res) => setItemCompared(res));
     setCompareContainer("compare-container active");
-    setcompareBtnTextText("Chiudi vs");
   }, [compareIds]);
 
   // Click btn per mostrare fast compare
   const handleVisible = () => {
     if (compareContainer === "compare-container") {
       setCompareContainer("compare-container active");
-      setcompareBtnTextText("Chiudi vs");
     } else {
       setCompareContainer("compare-container");
-      setcompareBtnTextText("Apri vs");
     }
   };
 
   // Click btn per andare al compare dettagliato
   const toDetailedPage = () => {
     setCompareContainer("compare-container");
-    setcompareBtnTextText("Apri vs");
     navigate("/comparing");
   };
 
@@ -71,7 +65,7 @@ export default function DefaultLayout() {
       <div style={{ position: "relative" }}>
         <button
           onClick={toDetailedPage}
-          style={{ opacity: compareIds.length > 0 ? "100" : "0" }}
+          style={{ opacity: compareIds.length > 1 ? "100" : "0" }}
           className="compare-in-detail-btn"
         >
           Compara nel dettaglio
@@ -81,7 +75,7 @@ export default function DefaultLayout() {
           className="compare-container-visibility"
           style={{ opacity: compareIds.length > 0 ? "100" : "0" }}
         >
-          {compareBtnText}
+          {compareContainer === "compare-container" ? "Apri" : "Chiudi"}
         </button>
       </div>
       <FastCompare

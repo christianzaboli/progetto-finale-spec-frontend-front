@@ -28,10 +28,8 @@ export default function Favorites() {
       {favoritesList.length > 0 ? (
         <ul>
           {favoritesList.map((f) => (
-            <li>
-              <Link key={f.id} to={`/services/${f.id}`}>
-                {f.title}
-              </Link>
+            <li key={f.id}>
+              <Link to={`/services/${f.id}`}>{f.title}</Link>
             </li>
           ))}
         </ul>
