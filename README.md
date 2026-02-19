@@ -1,16 +1,107 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+  <h1>Web Services Comparator</h1>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  <p>
+    Single Page Application sviluppata in <strong>React (JavaScript)</strong> che permette di:
+  </p>
 
-## React Compiler
+  <ul>
+    <li>Esplorare servizi web</li>
+    <li>Cercare e filtrare per categoria</li>
+    <li>Salvare nei preferiti</li>
+    <li>Confrontare fino a 4 elementi</li>
+  </ul>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+  <p>
+    Il progetto simula l’esperienza di un utente non autenticato che interagisce con un backend REST già fornito.
+  </p>
 
-## Expanding the ESLint configuration
+  <h2>Stack</h2>
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+  <ul>
+    <li>React</li>
+    <li>React Router DOM</li>
+    <li>Context API</li>
+    <li>Fetch API</li>
+    <li>Vite</li>
+  </ul>
+
+  <h2>Features</h2>
+
+  <ul>
+    <li>Lista servizi con:
+      <ul>
+        <li>Ricerca per <code>title</code></li>
+        <li>Filtro per <code>category</code></li>
+        <li>Ordinamento A-Z / Z-A</li>
+      </ul>
+    </li>
+    <li>Pagina di dettaglio con proprietà estese</li>
+    <li>Sistema preferiti globale</li>
+    <li>Comparatore rapido (drawer)</li>
+    <li>Pagina di confronto dettagliato</li>
+  </ul>
+
+  <h2>Architettura</h2>
+
+  <p>
+    Gestione stato globale tramite <strong>Context API</strong>:
+  </p>
+
+  <ul>
+    <li><code>compareIds</code></li>
+    <li><code>favoriteIds</code></li>
+    <li>Funzioni di aggiunta / rimozione</li>
+    <li>Fetch dinamico dei dettagli per il comparatore</li>
+  </ul>
+
+  <p>Flusso comparazione:</p>
+
+  <pre>
+compareIds → getComparingList() → Promise.all → render
+  </pre>
+
+  <h2>Setup</h2>
+
+  <h3>Frontend</h3>
+
+  <pre>
+git clone https://github.com/christianzaboli/progetto-finale-spec-frontend-front
+cd progetto-finale-spec-frontend-front
+npm install
+npm run dev
+  </pre>
+
+  <h3>Backend</h3>
+
+  <pre>
+git clone https://github.com/boolean-it/progetto-finale-spec-frontend-back
+cd progetto-finale-spec-frontend-back
+npm install
+npm run dev
+  </pre>
+
+  <p>Backend:</p>
+
+  <pre>
+http://localhost:3001
+  </pre>
+
+  <h2>Note</h2>
+
+  <p>
+    API URL configurabile tramite:
+  </p>
+
+  <pre>
+VITE_API_URL=http://localhost:3001
+  </pre>
+
+  <hr>
+
+  <p>
+    Christian Zaboli<br>
+    Progetto finale – React Specialization
+  </p>
+
