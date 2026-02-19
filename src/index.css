@@ -53,7 +53,9 @@ nav menu ul {
   gap: 0.55rem;
   flex-wrap: wrap;
 }
-
+.redTXT {
+  color: red;
+}
 nav menu ul li a {
   display: inline-flex;
   align-items: center;
@@ -105,14 +107,18 @@ h1 {
 
 /* Homepage controls wrapper: keeps search separate from filters/sort */
 .page > h1 + div:has(> input[type="text"]) {
-  display: grid;
-  gap: 0.85rem;
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: row;
+  /* flex-wrap: wrap; */
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
 }
 
 .page > h1 + div:has(> input[type="text"]) > div {
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   align-items: center;
   gap: 0.65rem;
   padding-top: 0.1rem;
@@ -122,7 +128,7 @@ input[type="text"],
 select {
   width: 100%;
   max-width: 420px;
-  margin-bottom: 0.7rem;
+  /* margin-bottom: 0.7rem; */
   padding: 0.66rem 0.82rem;
   border: 1px solid var(--line-strong);
   border-radius: 10px;
@@ -144,16 +150,17 @@ select:focus {
 .sortAZ {
   display: inline-flex;
   align-items: center;
-  margin: 0.2rem 0 1rem;
+  /* margin: 0.2rem 0 1rem; */
   padding: 0.58rem 0.9rem;
   border: 1px solid var(--line-strong);
   border-radius: 10px;
   background: #fff;
-  color: var(--text);
+  /* color: var(--text); */
   font-weight: 600;
   cursor: pointer;
   user-select: none;
   transition: background-color 0.2s ease;
+  text-wrap-mode: nowrap;
 }
 
 .sortAZ:hover {
@@ -188,6 +195,9 @@ select:focus {
 .services-list li p {
   color: var(--text);
   font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 5rem;
 }
 
 button {
@@ -234,11 +244,29 @@ button:disabled {
   font-size: 0.93rem;
 }
 
-.compare-btn {
+.compare-btn[type="checkbox"] {
+  appearance: none;
   width: 18px;
   height: 18px;
-  accent-color: #374151;
+  border: 2px solid var(--text-soft);
   cursor: pointer;
+  position: relative;
+}
+.compare-btn[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 6px;
+  height: 12px;
+  border: solid red;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg) scale(0.8);
+  opacity: 0;
+  bottom: 3px;
+}
+.compare-btn[type="checkbox"]:checked::after {
+  opacity: 1;
 }
 
 .compare-container {
@@ -254,7 +282,7 @@ button:disabled {
   backdrop-filter: blur(2px);
 }
 .compare-container.active {
-  height: 135px;
+  height: 165px;
   pointer-events: auto;
 }
 
@@ -282,6 +310,7 @@ button:disabled {
   bottom: 6rem;
 }
 .fast-compare-container {
+  height: 100%;
   display: flex;
   gap: 0.7rem;
   padding: 0.75rem;
@@ -293,7 +322,6 @@ button:disabled {
   position: relative;
   flex: 0 0 290px;
   border: 1px solid var(--line);
-  /* border-radius: 12px; */
   background: #fff;
   padding: 0.7rem;
 }
@@ -338,7 +366,83 @@ button:disabled {
   border-radius: 12px;
   overflow: hidden;
 }
+.favList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
 
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-height: 200px;
+  padding: 0.95rem;
+  border: 1px solid var(--line);
+  background: var(--surface-muted);
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  border-color: #cbd5e1;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+.card > a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.card > a:hover {
+  text-decoration: underline;
+  text-decoration-color: red;
+}
+
+.card > small {
+  color: var(--text-soft);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.card > ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.1rem;
+}
+
+.card > ul > li {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text-soft);
+  font-size: 0.76rem;
+  padding: 0.2rem 0.5rem;
+  transition: background-color 0.25s ease;
+}
+
+.card > ul > li:hover {
+  background: hsl(210, 25%, 93%);
+}
+.fav-page-btn {
+  outline: none;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+.fav-page-compare {
+  position: absolute;
+  bottom: 1rem;
+}
 .page table thead td {
   position: sticky;
   top: 0;
@@ -389,7 +493,8 @@ button:disabled {
 }
 
 .page table a:hover {
-  text-decoration: underline;
+  /* color: red; */
+  text-decoration: underline red;
 }
 
 .page table thead button {
@@ -426,6 +531,10 @@ footer {
 }
 
 @media (max-width: 900px) {
+  .favList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .services-list li {
     grid-template-columns: 1fr;
   }
@@ -453,6 +562,11 @@ footer {
 }
 
 @media (max-width: 640px) {
+  .favList {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
   main {
     width: min(1160px, 96vw);
     padding: 0.85rem 0 9rem;

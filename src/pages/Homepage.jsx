@@ -1,36 +1,26 @@
 import { useMemo, useState, useCallback } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useNavigate } from "react-router-dom";
-
-// debounce base
-function debounce(fn, time) {
-  let timer;
-  return (value) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      fn(value);
-    }, time);
-  };
-}
+import { debounce } from "../assets/utils";
 
 export default function Homepage() {
   const navigate = useNavigate();
+
   // import dati
   const {
     services,
     categories,
     compareIds,
     handleAddToCompare,
-    setFavs,
+    handleFavorites,
     favs,
+    query,
+    handleQuery,
+    handleCategory,
   } = useGlobalContext();
 
-  // filtri
-  const [titleSearch, setTitleSearch] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("");
-
   // attivazione useCallback + debounce
-  const debouncedSearch = useCallback(debounce(setTitleSearch, 200), []);
+  const debouncedSearch = useCallback(debounce(handleQuery, 300), []);
 
   // ordinamento
   const [sortOrder, setSortOrder] = useState({
@@ -39,32 +29,20 @@ export default function Homepage() {
   });
 
   const memoedServices = useMemo(() => {
-    // filtro servizi in base alla ricerca input
-    const filteredServices = [...services].filter((s) =>
-      titleSearch === ""
-        ? true
-        : s.title.toLocaleLowerCase().includes(titleSearch.toLocaleLowerCase()),
-    );
-    const chosenCategory = categories.find((c) => c === categoryFilter);
-
-    //ordimaneto a-z z-a per titolo (da ampliare)
+    const filteredServices = [...services];
+    //ordinamento a-z z-a per titolo (da ampliare)
     filteredServices.sort(
       (a, b) => a.title.localeCompare(b.title) * sortOrder.order,
     );
-
-    // filtro servizi (gia filtrati per input) in base alle categorie (evitando hardcode di generi in caso ce ne fossero nuovi)
-    if (categoryFilter !== "") {
-      return filteredServices.filter((s) => s.category === chosenCategory);
-    }
-
     return filteredServices;
-  }, [services, titleSearch, categoryFilter, sortOrder]);
+  }, [services, query, sortOrder]);
 
   // RENDER ZZZZZONE --------------------------------
   return (
     <>
       <div className="page">
         <h1>Benvenuto nel comparatore!</h1>
+
         <div>
           {/* ricerca */}
           <input
@@ -76,7 +54,7 @@ export default function Homepage() {
             {/* filtro categoria */}
             <select
               name={categories}
-              onChange={(e) => setCategoryFilter(e.target.value)}
+              onChange={(e) => handleCategory(e.target.value)}
             >
               <option value={""}>Seleziona una categoria</option>
               {categories?.length > 0 &&
@@ -108,13 +86,13 @@ export default function Homepage() {
         </div>
 
         {/* lista servizi */}
-        {memoedServices.length > 0 && (
+        {memoedServices.length > 0 ? (
           <ul className="services-list">
             {memoedServices.map((s) => (
               <li key={s.id}>
                 <p>
                   {s.title}
-                  {/* - {s.category} */}
+                  <span style={{ color: "lightgray" }}>/{s.category}</span>
                 </p>
                 <label className="compare-btn-label">
                   Compara
@@ -128,23 +106,17 @@ export default function Homepage() {
                 <button onClick={() => navigate(`/services/${s.id}`)}>
                   Dettagli
                 </button>
-                <button
-                  onClick={() => setFavs([...favs, s.id])}
-                  disabled={favs.includes(s.id)}
-                >
-                  Aggiungi ai preferiti
+                <button onClick={() => handleFavorites(s.id)}>
+                  <i
+                    className="fa-solid fa-heart"
+                    style={{ color: favs.includes(s.id) ? "red" : "black" }}
+                  ></i>
                 </button>
-                {favs.includes(s.id) && (
-                  <button
-                    className="btn-fav-home"
-                    onClick={() => setFavs(favs.filter((f) => f !== s.id))}
-                  >
-                    Rimuovi dai preferiti
-                  </button>
-                )}
               </li>
             ))}
           </ul>
+        ) : (
+          <p>Nessun risultato</p>
         )}
       </div>
     </>

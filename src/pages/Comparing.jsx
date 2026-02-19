@@ -12,7 +12,7 @@ export default function Comparing() {
 
   const renderList = (
     items,
-    fallback = "Dato non disponibile",
+    fallback = <span className="redTXT">Dato non disponibile</span>,
     formatter = (item) => item,
   ) => {
     if (!items?.length) return fallback;

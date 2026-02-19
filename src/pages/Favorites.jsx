@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
-import { Link } from "react-router-dom";
 
+import Card from "../components/Card";
 export default function Favorites() {
   const { favs } = useGlobalContext();
   const [favoritesList, setFavoritesList] = useState([]);
@@ -19,20 +19,18 @@ export default function Favorites() {
   useEffect(() => {
     if (favs.length === 0) return;
     getFavoritesList().then((res) => setFavoritesList(res));
-  }, []);
+  }, [favs]);
 
   return (
     <div className="page">
-      <h1>Pagina dei preferiti</h1>
+      <h1>Preferiti</h1>
 
       {favoritesList.length > 0 ? (
-        <ul>
+        <div className="favList">
           {favoritesList.map((f) => (
-            <li key={f.id}>
-              <Link to={`/services/${f.id}`}>{f.title}</Link>
-            </li>
+            <Card key={f.id} props={f} />
           ))}
-        </ul>
+        </div>
       ) : (
         <div>
           <p>Nessuno elemento aggiunto ai preferiti</p>

@@ -4,8 +4,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
 export default function ServiceDetail() {
-  const { getDetailedService, compareIds, handleAddToCompare, favs, setFavs } =
-    useGlobalContext();
+  const {
+    getDetailedService,
+    compareIds,
+    handleAddToCompare,
+    favs,
+    handleFavorites,
+  } = useGlobalContext();
   const paramsId = useParams();
   const navigate = useNavigate();
   // servizio selezionato
@@ -24,7 +29,7 @@ export default function ServiceDetail() {
 
   const renderList = (
     items,
-    fallback = "Dato non disponibile",
+    fallback = <span className="redTXT">Dato non disponibile</span>,
     suffix = "",
   ) => {
     if (!items?.length) return fallback;
@@ -35,16 +40,8 @@ export default function ServiceDetail() {
     <>
       {service && (
         <div className="page">
-          <h1>Dettagli servizio</h1>
+          <h1>{service.title}</h1>
           <table>
-            <thead>
-              <tr>
-                <td>
-                  <div></div>
-                </td>
-                <td>{service.title}</td>
-              </tr>
-            </thead>
             <tbody>
               <tr>
                 <td>
@@ -249,21 +246,12 @@ export default function ServiceDetail() {
                 onChange={() => handleAddToCompare(service.id)}
               ></input>
             </label>
-            <button
-              onClick={() => setFavs([...favs, service.id])}
-              enabled="true"
-              disabled={favs.includes(service.id)}
-            >
-              Aggiungi ai preferiti
+            <button onClick={() => handleFavorites(service.id)}>
+              <i
+                className="fa-solid fa-heart"
+                style={{ color: favs.includes(service.id) ? "red" : "black" }}
+              ></i>
             </button>
-
-            {favs.includes(service.id) && (
-              <button
-                onClick={() => setFavs(favs.filter((f) => f !== service.id))}
-              >
-                Rimuovi dai preferiti
-              </button>
-            )}
           </div>
         </div>
       )}

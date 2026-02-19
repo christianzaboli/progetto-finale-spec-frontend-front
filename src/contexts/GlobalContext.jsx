@@ -1,18 +1,25 @@
 import { createContext, useContext } from "react";
+
 // custom hooks
 import useService from "../hooks/useService";
 import useCompare from "../hooks/useCompare";
 import useStorage from "../hooks/useStorage";
-import useSessionStorage from "../hooks/useSessionStorage";
-export const GlobalContext = createContext();
 
+export const GlobalContext = createContext();
 export function useGlobalContext() {
   return useContext(GlobalContext);
 }
 
 export default function GlobalProvider({ children }) {
   // service hook
-  const { services, categories, getDetailedService } = useService();
+  const {
+    services,
+    categories,
+    getDetailedService,
+    query,
+    handleQuery,
+    handleCategory,
+  } = useService();
 
   // compare hook
   const {
@@ -25,7 +32,12 @@ export default function GlobalProvider({ children }) {
 
   // favorites hook
   const [favs, setFavs] = useStorage("favoritesIds", []);
-  // const [compares, setCompares] = useSessionStorage("CompareIds", []);
+  const handleFavorites = (id) => {
+    favs.includes(id)
+      ? setFavs(favs.filter((f) => f !== id))
+      : setFavs([...favs, id]);
+  };
+
   return (
     <GlobalContext.Provider
       value={{
@@ -33,6 +45,9 @@ export default function GlobalProvider({ children }) {
         services,
         categories,
         getDetailedService,
+        query,
+        handleQuery,
+        handleCategory,
 
         //useCompare()
         compareIds,
@@ -40,12 +55,10 @@ export default function GlobalProvider({ children }) {
         removeFromCompare,
         handleAddToCompare,
         getComparingList,
+
         //useStorage()
         favs,
-        setFavs,
-        //useSessionStorage()
-        // compares,
-        // setCompares,
+        handleFavorites,
       }}
     >
       {children}

@@ -1,23 +1,40 @@
 import { useState, useEffect } from "react";
+import { fetchServiceApi } from "../assets/utils";
+
 export default function useService() {
   const [services, setServices] = useState([]);
+  const [query, setQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+
+  const handleQuery = (value) => {
+    if (typeof value !== "string")
+      throw new Error("il valore dev'essere una stringa");
+    setQuery(value.trim());
+  };
+
+  const handleCategory = (value) => {
+    if (value !== "") {
+      return setCategoryFilter(value.toLowerCase());
+    } else {
+      return setCategoryFilter("");
+    }
+  };
 
   // fetch basic dall'api
   useEffect(() => {
-    fetch(`http://localhost:3001/services`)
-      .then((res) => res.json())
-      .then((data) => {
-        setServices(data);
-      })
+    fetchServiceApi(query, categoryFilter)
+      .then((data) => setServices(data))
       .catch((err) => console.error(err));
-  }, []);
+  }, [query, categoryFilter]);
 
-  const categories = services?.reduce((acc, curr) => {
-    if (!acc.includes(curr.category)) {
-      acc.push(curr.category);
-    }
-    return acc;
-  }, []);
+  // Versione hardcoded (per sfruttare meglio le chiamate api disponibili)
+  const categories = ["Vod", "Anime", "Free", "Mixed", "Sports"];
+  // const categories = services?.reduce((acc, curr) => {
+  //   if (!acc.includes(curr.category)) {
+  //     acc.push(curr.category);
+  //   }
+  //   return acc;
+  // }, []);
 
   // fetch detailed service
   const getDetailedService = async (id) => {
@@ -35,5 +52,8 @@ export default function useService() {
     services,
     categories,
     getDetailedService,
+    query,
+    handleQuery,
+    handleCategory,
   };
 }

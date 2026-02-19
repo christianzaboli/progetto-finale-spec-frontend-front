@@ -9,8 +9,10 @@ export default function DefaultLayout() {
     useGlobalContext();
   const [itemsCompared, setItemCompared] = useState([]);
   const [compareContainer, setCompareContainer] = useState("compare-container");
+
   const navigate = useNavigate();
   const location = useLocation();
+
   //  gestione fast compare e fetch di elementi da comparare
   useEffect(() => {
     if (compareIds.length === 0) {
@@ -22,7 +24,7 @@ export default function DefaultLayout() {
     setCompareContainer("compare-container active");
   }, [compareIds]);
 
-  // visibilita del drawer di compare rapido
+  // visibilita del drawer fast compare
   const [isOnComparePage, setIsOnComparePage] = useState(false);
   useEffect(() => {
     setIsOnComparePage(location.pathname === "/comparing" ? true : false);

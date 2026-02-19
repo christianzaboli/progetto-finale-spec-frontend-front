@@ -24,13 +24,12 @@ export default function useCompare() {
   };
 
   // MULTI DETAILED GET
-  async function getComparingList() {
-    const promises = compareIds.map((id) =>
+  async function getComparingList(ids) {
+    const promises = ids.map((id) =>
       fetch(`http://localhost:3001/services/${id}`).then((res) => res.json()),
     );
     const result = await Promise.all(promises);
-    const cleanRes = result.map((r) => r.service);
-    return cleanRes;
+    return result.map((r) => r.service);
   }
 
   return {
