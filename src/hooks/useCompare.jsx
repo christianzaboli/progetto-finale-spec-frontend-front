@@ -1,4 +1,5 @@
 import useSessionStorage from "./useSessionStorage";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function useCompare() {
   const [compareIds, setCompareIds] = useSessionStorage("compareIds", []);
@@ -25,9 +26,12 @@ export default function useCompare() {
 
   // MULTI DETAILED GET
   async function getComparingList(ids) {
-    const promises = ids.map((id) =>
-      fetch(`http://localhost:3001/services/${id}`).then((res) => res.json()),
-    );
+    const promises = ids.map(async (id) => {
+      const res = await fetch(`${API_URL}/services/${id}`);
+      if (!res.ok) throw new Error(`Errore nel fetch di servizio ${id}`);
+      const obj = await res.json();
+      return obj;
+    });
     const result = await Promise.all(promises);
     return result.map((r) => r.service);
   }

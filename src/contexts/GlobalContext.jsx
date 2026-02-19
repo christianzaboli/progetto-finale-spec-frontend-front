@@ -5,6 +5,9 @@ import useService from "../hooks/useService";
 import useCompare from "../hooks/useCompare";
 import useStorage from "../hooks/useStorage";
 
+// API URL
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const GlobalContext = createContext();
 export function useGlobalContext() {
   return useContext(GlobalContext);
@@ -59,6 +62,9 @@ export default function GlobalProvider({ children }) {
         //useStorage()
         favs,
         handleFavorites,
+
+        // API URL
+        API_URL,
       }}
     >
       {children}

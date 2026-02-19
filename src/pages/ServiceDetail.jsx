@@ -20,7 +20,7 @@ export default function ServiceDetail() {
   useEffect(() => {
     getDetailedService(parseInt(paramsId.id)).then((res) => {
       if (!res) {
-        navigate("/");
+        navigate("/404");
         return;
       }
       setService(res.service);

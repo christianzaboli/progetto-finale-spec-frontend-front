@@ -21,7 +21,7 @@ export default function Comparing() {
 
   useEffect(() => {
     compareIds.length > 0
-      ? getComparingList().then((res) => setServices(res))
+      ? getComparingList(compareIds).then((res) => setServices(res))
       : setServices(null);
   }, [compareIds]);
 

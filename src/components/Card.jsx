@@ -5,7 +5,6 @@ export default function Card({ props }) {
   const { title, category, contentTypes, id } = props;
   const { handleFavorites, favs, handleAddToCompare, compareIds } =
     useGlobalContext();
-
   return (
     <>
       <div className="card">

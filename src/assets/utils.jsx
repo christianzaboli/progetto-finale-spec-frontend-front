@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 // debounce generico
 export const debounce = (fn, time) => {
   let timer;
@@ -11,7 +13,7 @@ export const debounce = (fn, time) => {
 
 // funzione di supporto per comporre la chiamata api
 function endpointCheck(search, category) {
-  let urlString = "http://localhost:3001/services";
+  let urlString = `${API_URL}/services`;
   if (search !== "" && category !== "") {
     return (urlString += `?search=${encodeURIComponent(search)}&category=${category}`);
   }
@@ -27,6 +29,10 @@ export const fetchServiceApi = async (search = "", category = "") => {
   const endpoint = endpointCheck(search, category);
   try {
     const response = await fetch(endpoint);
+    if (!response.ok) {
+      console.error("Errore caricamento lista servizi");
+      return;
+    }
     const data = await response.json();
     return data;
   } catch (error) {

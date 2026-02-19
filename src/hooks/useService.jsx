@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchServiceApi } from "../assets/utils";
 
+const API_URL = import.meta.env.VITE_API_URL;
 export default function useService() {
   const [services, setServices] = useState([]);
   const [query, setQuery] = useState("");
@@ -39,9 +40,10 @@ export default function useService() {
   // fetch detailed service
   const getDetailedService = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3001/services/${id}`);
+      const response = await fetch(`${API_URL}/services/${id}`);
       const data = await response.json();
-      if (!data.success) throw new Error(`Errore nel fetch del servizio ${id}`);
+      if (!data.success)
+        throw new Error(`Errore nel fetch del servizio ${id}, esiste?`);
       return data;
     } catch (error) {
       console.error(error);

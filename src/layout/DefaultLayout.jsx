@@ -20,7 +20,7 @@ export default function DefaultLayout() {
       setCompareContainer("compare-container");
       return;
     }
-    getComparingList().then((res) => setItemCompared(res));
+    getComparingList(compareIds).then((res) => setItemCompared(res));
     setCompareContainer("compare-container active");
   }, [compareIds]);
 
