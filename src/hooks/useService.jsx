@@ -9,7 +9,7 @@ export default function useService() {
 
   const handleQuery = (value) => {
     if (typeof value !== "string")
-      throw new Error("il valore dev'essere una stringa");
+      throw new Error("il valore deve essere una stringa");
     setQuery(value.trim());
   };
 

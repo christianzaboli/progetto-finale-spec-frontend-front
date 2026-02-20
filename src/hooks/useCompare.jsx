@@ -4,8 +4,6 @@ const API_URL = import.meta.env.VITE_API_URL;
 export default function useCompare() {
   const [compareIds, setCompareIds] = useSessionStorage("compareIds", []);
 
-  // comparing service
-
   // ADD
   const addToCompare = (id) => {
     if (compareIds.includes(id) || compareIds.length === 4) return;
@@ -18,9 +16,15 @@ export default function useCompare() {
     setCompareIds(compareIds.filter((s) => s !== id));
   };
 
-  // REMOVE
+  // HANDLER
   const handleAddToCompare = (id) => {
-    if (compareIds.includes(id)) return removeFromCompare(id);
+    if (compareIds.includes(id)) {
+      removeFromCompare(id);
+      return;
+    }
+    if (compareIds.length === 4) {
+      console.error("Limite di comparazione raggiunto");
+    }
     addToCompare(id);
   };
 

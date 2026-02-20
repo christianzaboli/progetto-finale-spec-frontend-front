@@ -1,6 +1,6 @@
 import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 // components
 import FastCompare from "../components/FastCompare";
 
@@ -24,7 +24,7 @@ export default function DefaultLayout() {
     setCompareContainer("compare-container active");
   }, [compareIds]);
 
-  // visibilita del drawer fast compare
+  // visibilità del drawer fast compare
   const [isOnComparePage, setIsOnComparePage] = useState(false);
   useEffect(() => {
     setIsOnComparePage(location.pathname === "/comparing" ? true : false);
@@ -45,6 +45,47 @@ export default function DefaultLayout() {
     navigate("/comparing");
   };
 
+  const scrollRef = useRef(null);
+  const openDrawerRef = useRef(null);
+  const goToCompareRef = useRef(null);
+
+  useEffect(() => {
+    function keyClicks(e) {
+      const tag = e.target.tagName;
+
+      // punti in cui voglio un normale comportamento
+      if (["INPUT", "TEXTAREA", "SELECT"].includes(tag)) {
+        return;
+      }
+
+      // tasti che utilizzo per il pannello in basso
+      if (["ArrowDown", "ArrowUp", "ArrowRight"].includes(e.key)) {
+        e.preventDefault();
+      }
+
+      //azioni
+      switch (e.key) {
+        case "ArrowUp":
+          scrollRef.current.click();
+          return;
+        case "ArrowDown":
+          if (openDrawerRef.current.style.display !== "none") {
+            openDrawerRef.current.click();
+          }
+          return;
+        case "ArrowRight":
+          if (goToCompareRef.current.style.display !== "none") {
+            goToCompareRef.current.click();
+          }
+          return;
+      }
+    }
+    window.addEventListener("keydown", (e) => keyClicks(e));
+
+    return () => {
+      removeEventListener("keydown", (e) => keyClicks(e));
+    };
+  }, []);
   return (
     <>
       {/* NAVBAR */}
@@ -53,8 +94,9 @@ export default function DefaultLayout() {
           <menu>
             <ul>
               <li>
-                <NavLink to={"/homepage"}>Cerca</NavLink>
+                <NavLink to={"/search"}>Cerca</NavLink>
               </li>
+
               <li>
                 <NavLink to={"/favorites"}>Preferiti</NavLink>
               </li>
@@ -65,36 +107,50 @@ export default function DefaultLayout() {
 
       {/* MAIN CONTENT */}
       <main>
-        <Outlet />
+        <div className="page">
+          <Outlet />
+        </div>
       </main>
 
       {/* COMPARE SECTION */}
       <button
+        ref={scrollRef}
         className="scroll-to-top-btn"
         style={{}}
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >
-        Torna su
+        Torna su <i className="fa-solid fa-angle-up redTXT"></i>
       </button>
       <div style={{ display: isOnComparePage ? "none" : "block" }}>
         <div style={{ position: "relative" }}>
           <button
+            ref={goToCompareRef}
             onClick={toDetailedPage}
             style={{
               display: compareIds.length > 1 ? "block" : "none",
             }}
             className="compare-in-detail-btn"
           >
-            Compara nel dettaglio
+            Compara nel dettaglio{" "}
+            <i className="fa-solid fa-angle-right redTXT"></i>
           </button>
           <button
+            ref={openDrawerRef}
             onClick={handleVisible}
             className="compare-container-visibility"
             style={{
               display: compareIds.length > 0 ? "block" : "none",
             }}
           >
-            {compareContainer === "compare-container" ? "Apri" : "Chiudi"}
+            {compareContainer === "compare-container" ? (
+              <span>
+                Apri <i className="fa-solid fa-angle-up redTXT"></i>
+              </span>
+            ) : (
+              <span>
+                Chiudi <i className="fa-solid fa-angle-down redTXT"></i>
+              </span>
+            )}
           </button>
         </div>
         <FastCompare

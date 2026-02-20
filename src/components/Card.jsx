@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { useGlobalContext } from "../contexts/GlobalContext";
+import { memo } from "react";
+import ComparaBtn from "./ComparaBtn";
 
-export default function Card({ props }) {
+function Card({ props }) {
   const { title, category, contentTypes, id } = props;
-  const { handleFavorites, favs, handleAddToCompare, compareIds } =
-    useGlobalContext();
+  const { handleFavorites, favs } = useGlobalContext();
+
   return (
     <>
       <div className="card">
@@ -17,15 +19,11 @@ export default function Card({ props }) {
             </li>
           ))}
         </ul>
-        <label className="compare-btn-label fav-page-compare">
-          Compara
-          <input
-            className="compare-btn"
-            type="checkbox"
-            checked={compareIds.includes(id)}
-            onChange={() => handleAddToCompare(id)}
-          ></input>
-        </label>
+        <ComparaBtn
+          labelClasses={"compare-btn-label fav-page-compare"}
+          id={id}
+        />
+
         <button onClick={() => handleFavorites(id)} className="fav-page-btn">
           <i
             className="fa-solid fa-heart"
@@ -36,3 +34,4 @@ export default function Card({ props }) {
     </>
   );
 }
+export default memo(Card);

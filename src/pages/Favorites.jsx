@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
-
 import Card from "../components/Card";
 
 export default function Favorites() {
@@ -33,7 +32,7 @@ export default function Favorites() {
   }, [favs]);
 
   return (
-    <div className="page">
+    <>
       <h1>Preferiti</h1>
 
       {favoritesList.length > 0 ? (
@@ -47,6 +46,6 @@ export default function Favorites() {
           <p>Nessuno elemento aggiunto ai preferiti</p>
         </div>
       )}
-    </div>
+    </>
   );
 }

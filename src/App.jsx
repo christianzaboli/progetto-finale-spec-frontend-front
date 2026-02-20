@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 // pagine
-import Homepage from "./pages/Homepage";
+import Searchpage from "./pages/Searchpage";
 import ServiceDetail from "./pages/ServiceDetail";
 import Favorites from "./pages/Favorites";
 import NotFound from "./pages/NotFound";
@@ -11,8 +11,8 @@ function App() {
     <>
       <Routes>
         <Route element={<DefaultLayout />}>
-          <Route path="/" element={<Navigate to={"/homepage"} />} />
-          <Route path="/homepage" element={<Homepage />} />
+          <Route path="/" element={<Navigate to={"/search"} />} />
+          <Route path="/search" element={<Searchpage />} />
           <Route path="/services/:id" element={<ServiceDetail />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/comparing" element={<Comparing />} />
