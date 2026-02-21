@@ -18,6 +18,7 @@ export default function GlobalProvider({ children }) {
   const {
     services,
     categories,
+    categoryFilter,
     getDetailedService,
     query,
     handleQuery,
@@ -49,6 +50,7 @@ export default function GlobalProvider({ children }) {
         categories,
         getDetailedService,
         query,
+        categoryFilter,
         handleQuery,
         handleCategory,
 

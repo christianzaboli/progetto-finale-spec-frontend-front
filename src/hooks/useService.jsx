@@ -29,7 +29,7 @@ export default function useService() {
   }, [query, categoryFilter]);
 
   // Versione hardcoded (per sfruttare meglio le chiamate api disponibili)
-  const categories = ["Vod", "Anime", "Free", "Mixed", "Sports"];
+  const categories = ["Vod", "Anime", "Free", "Mixed", "Sports", "Live"];
   // const categories = services?.reduce((acc, curr) => {
   //   if (!acc.includes(curr.category)) {
   //     acc.push(curr.category);
@@ -53,6 +53,7 @@ export default function useService() {
   return {
     services,
     categories,
+    categoryFilter,
     getDetailedService,
     query,
     handleQuery,

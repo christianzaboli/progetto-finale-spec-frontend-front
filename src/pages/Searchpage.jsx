@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useState, useCallback, useEffect } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "../assets/utils";
@@ -6,16 +6,18 @@ import ComparaBtn from "../components/ComparaBtn";
 export default function Searchpage() {
   const navigate = useNavigate();
 
-  // import dati
+  // import dati global
   const {
-    services,
     categories,
+    services,
     handleFavorites,
     favs,
     query,
+    categoryFilter,
     handleQuery,
     handleCategory,
   } = useGlobalContext();
+
   // attivazione useCallback + debounce
   const debouncedSearch = useCallback(debounce(handleQuery, 300), []);
 
@@ -25,14 +27,29 @@ export default function Searchpage() {
     text: "Ordina dalla A-Z",
   });
 
+  // numero di elementi visibili
+  const [visibleCount, setVisibleCount] = useState(8);
+  useEffect(() => {
+    setVisibleCount(8);
+  }, [query, categoryFilter]);
+
   const memoedServices = useMemo(() => {
     const filteredServices = [...services];
+
     //ordinamento a-z z-a per titolo (da ampliare)
     filteredServices.sort(
       (a, b) => a.title.localeCompare(b.title) * sortOrder.order,
     );
-    return filteredServices;
-  }, [services, query, sortOrder]);
+    return filteredServices.slice(0, visibleCount);
+  }, [services, query, sortOrder, visibleCount]);
+
+  // reset query
+  useEffect(() => {
+    return () => {
+      handleQuery("");
+      handleCategory("");
+    };
+  }, []);
 
   // RENDER ZZZZZONE --------------------------------
   return (
@@ -106,6 +123,14 @@ export default function Searchpage() {
         </ul>
       ) : (
         <p>Nessun risultato</p>
+      )}
+      {services.length > visibleCount && (
+        <button
+          onClick={() => setVisibleCount((prev) => prev + 5)}
+          className="load-more-btn"
+        >
+          Carica altri
+        </button>
       )}
     </>
   );

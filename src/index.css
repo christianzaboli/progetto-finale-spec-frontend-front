@@ -13,7 +13,7 @@
   --accent-red: light-dark(#dc2626, #ef4444);
   --accent-red-muted: light-dark(#c9a3a3, #fca5a5);
   --header-bg: light-dark(rgba(255, 255, 255, 0.72), rgba(11, 15, 20, 0.72));
-  --input-bg: light-dark(#ffffff, #111827);
+  --input-bg: light-dark(rgba(255, 255, 255, 0.7), hsla(221, 39%, 11%, 0.65));
   --focus-border: light-dark(#9ca3af, #64748b);
   --focus-ring: light-dark(rgba(17, 24, 39, 0.08), rgba(148, 163, 184, 0.24));
   --select-option-hover-bg: light-dark(#35471d, #4d6528);
@@ -352,6 +352,7 @@ button:disabled {
   flex: 0 0 290px;
   border: 1px solid var(--line);
   background: var(--input-bg);
+  backdrop-filter: blur(10px);
   padding: 0.7rem;
 }
 
@@ -609,6 +610,12 @@ footer {
 }
 .heart-icon {
   color: var(--accent-red);
+}
+.load-more-btn {
+  position: relative;
+  left: 50%;
+  margin: 20px 0 0 0;
+  translate: -50% 0;
 }
 @media (max-width: 900px) {
   .favList {

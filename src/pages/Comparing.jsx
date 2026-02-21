@@ -38,19 +38,6 @@ export default function Comparing() {
           <table>
             {/* Head */}
             <thead>
-              {/* buttons gestionali */}
-              {/* <tr>
-                  <td style={{ display: "table-row-group" }}></td>
-                  {services.map((s) => (
-                    <td key={s.id}>
-                      <div>
-                        <button onClick={() => removeFromCompare(s.id)}>
-                          X
-                        </button>
-                      </div>
-                    </td>
-                  ))}
-                </tr> */}
               {/* Titolo */}
               <tr>
                 <td style={{ display: "table-row-group" }}></td>
