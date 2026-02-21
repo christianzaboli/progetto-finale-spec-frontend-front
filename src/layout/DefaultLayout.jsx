@@ -3,10 +3,12 @@ import { useGlobalContext } from "../contexts/GlobalContext";
 import { useEffect, useState, useRef } from "react";
 // components
 import FastCompare from "../components/FastCompare";
+import { useThemeContext } from "../contexts/ThemeContext";
 
 export default function DefaultLayout() {
   const { compareIds, getComparingList, removeFromCompare } =
     useGlobalContext();
+  const { theme, changeTheme } = useThemeContext();
   const [itemsCompared, setItemCompared] = useState([]);
   const [compareContainer, setCompareContainer] = useState("compare-container");
 
@@ -92,6 +94,11 @@ export default function DefaultLayout() {
       <header>
         <nav>
           <menu>
+            <div>
+              <button onClick={changeTheme}>
+                {theme === "light" ? "Dark mode" : "Light mode"}
+              </button>
+            </div>
             <ul>
               <li>
                 <NavLink to={"/search"}>Cerca</NavLink>

@@ -3,7 +3,6 @@ import { useGlobalContext } from "../contexts/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "../assets/utils";
 import ComparaBtn from "../components/ComparaBtn";
-
 export default function Searchpage() {
   const navigate = useNavigate();
 
@@ -17,7 +16,6 @@ export default function Searchpage() {
     handleQuery,
     handleCategory,
   } = useGlobalContext();
-
   // attivazione useCallback + debounce
   const debouncedSearch = useCallback(debounce(handleQuery, 300), []);
 
@@ -40,7 +38,6 @@ export default function Searchpage() {
   return (
     <>
       <h1>Benvenuto nel comparatore!</h1>
-
       <div>
         {/* ricerca */}
         <input
@@ -99,7 +96,9 @@ export default function Searchpage() {
               <button onClick={() => handleFavorites(s.id)}>
                 <i
                   className="fa-solid fa-heart"
-                  style={{ color: favs.includes(s.id) ? "red" : "black" }}
+                  style={{
+                    color: favs.includes(s.id) && "red",
+                  }}
                 ></i>
               </button>
             </li>
