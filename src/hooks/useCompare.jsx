@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useSessionStorage from "./useSessionStorage";
 const API_URL = import.meta.env.VITE_API_URL;
 

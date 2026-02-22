@@ -453,6 +453,7 @@ button:disabled {
   text-decoration: none;
   font-weight: 700;
   line-height: 1.35;
+  width: fit-content;
 }
 
 .card > a:hover {

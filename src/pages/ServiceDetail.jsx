@@ -2,14 +2,9 @@ import { useEffect, useState } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useParams, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import ComparaBtn from "../components/ComparaBtn";
 export default function ServiceDetail() {
-  const {
-    getDetailedService,
-    compareIds,
-    handleAddToCompare,
-    favs,
-    handleFavorites,
-  } = useGlobalContext();
+  const { getDetailedService, favs, handleFavorites } = useGlobalContext();
   const paramsId = useParams();
   const navigate = useNavigate();
   // servizio selezionato
@@ -394,15 +389,8 @@ export default function ServiceDetail() {
             </table>
           </div>
           <div className="details-buttons">
-            <label className="compare-btn-label">
-              Compara
-              <input
-                className="compare-btn"
-                type="checkbox"
-                checked={compareIds.includes(service.id)}
-                onChange={() => handleAddToCompare(service.id)}
-              ></input>
-            </label>
+            <ComparaBtn id={service.id} />
+
             <button onClick={() => handleFavorites(service.id)}>
               <i
                 className="fa-solid fa-heart"
