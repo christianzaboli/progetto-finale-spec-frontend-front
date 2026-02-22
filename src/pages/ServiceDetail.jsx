@@ -44,7 +44,14 @@ export default function ServiceDetail() {
     <>
       {service && (
         <>
-          <h1>{service.title}</h1>
+          <div className="detail-title">
+            <h1>{service.title}</h1>
+            <img
+              className="page-logo"
+              src={service?.logoUrl}
+              alt={`${service.title.toLowerCase()}-logo`}
+            />
+          </div>
           <div className="table-scroll">
             <table>
               <tbody>

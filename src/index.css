@@ -14,6 +14,7 @@
   --accent-red-muted: light-dark(#c9a3a3, #fca5a5);
   --header-bg: light-dark(rgba(255, 255, 255, 0.72), rgba(11, 15, 20, 0.72));
   --input-bg: light-dark(rgba(255, 255, 255, 0.7), hsla(221, 39%, 11%, 0.65));
+  --input-bga: light-dark(rgba(255, 255, 255, 0.8), rgba(17, 24, 39, 0.8));
   --focus-border: light-dark(#9ca3af, #64748b);
   --focus-ring: light-dark(rgba(17, 24, 39, 0.08), rgba(148, 163, 184, 0.24));
   --select-option-hover-bg: light-dark(#35471d, #4d6528);
@@ -113,7 +114,7 @@ nav menu ul li a.active {
 main {
   width: min(1160px, 94vw);
   margin: 0 auto;
-  padding: 1.2rem 0 9rem;
+  padding: 1.2rem 0 10rem;
 }
 
 h1,
@@ -389,7 +390,7 @@ button:disabled {
 
 .page table {
   width: 100%;
-  min-width: 860px;
+  /* min-width: 860px; */
   border-collapse: separate;
   border-spacing: 0;
 }
@@ -421,7 +422,29 @@ button:disabled {
   background: var(--item-hover-bg);
   box-shadow: 0 8px 20px var(--card-shadow);
 }
-
+.page-logo {
+  max-width: 5rem;
+  border-radius: 16px;
+}
+.page-logo-comparing {
+  max-width: 33px;
+}
+.title-name-logo-table {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.detail-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  /* padding: 0 10px; */
+}
+.detail-title > h1 {
+  margin: 0;
+  font-size: clamp(2rem, 2.2vw, 2.2rem);
+}
 .card > a {
   color: var(--text);
   text-decoration: none;
@@ -481,7 +504,8 @@ button:disabled {
   box-shadow: 0px 5px 7px 0px var(--table-sticky-shadow);
   top: var(--header-h);
   z-index: 30;
-  background: var(--input-bg);
+  background: var(--input-bga);
+  backdrop-filter: blur(1px);
 }
 
 .page table thead tr:nth-child(2) td {
@@ -639,7 +663,7 @@ footer {
   }
 
   .page table {
-    min-width: 720px;
+    /* min-width: 720px; */
   }
 
   .page table td:first-child {

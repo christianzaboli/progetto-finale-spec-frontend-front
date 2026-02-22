@@ -44,7 +44,14 @@ export default function Comparing() {
                 {services.map((s) => (
                   <td key={s.id}>
                     <div className="title-table">
-                      <Link to={`/services/${s.id}`}>{s.title}</Link>
+                      <div className="title-name-logo-table">
+                        <img
+                          className="page-logo-comparing"
+                          src={s?.logoUrl}
+                          alt={`${s.title.toLowerCase()}-logo`}
+                        />
+                        <Link to={`/services/${s.id}`}>{s.title}</Link>
+                      </div>
                       <button onClick={() => removeFromCompare(s.id)}>X</button>
                     </div>
                   </td>

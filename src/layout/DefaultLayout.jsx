@@ -94,11 +94,6 @@ export default function DefaultLayout() {
       <header>
         <nav>
           <menu>
-            <div>
-              <button onClick={changeTheme}>
-                {theme === "light" ? "Dark mode" : "Light mode"}
-              </button>
-            </div>
             <ul>
               <li>
                 <NavLink to={"/search"}>Cerca</NavLink>
@@ -108,6 +103,11 @@ export default function DefaultLayout() {
                 <NavLink to={"/favorites"}>Preferiti</NavLink>
               </li>
             </ul>
+            <div>
+              <button onClick={changeTheme}>
+                {theme === "light" ? "Dark mode" : "Light mode"}
+              </button>
+            </div>
           </menu>
         </nav>
       </header>
