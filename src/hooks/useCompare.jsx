@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
 import useSessionStorage from "./useSessionStorage";
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function useCompare() {
   const [compareIds, setCompareIds] = useSessionStorage("compareIds", []);
-
+  const [showAlertToast, setShowAlertToast] = useState(false);
   // ADD
   const addToCompare = (id) => {
     if (compareIds.includes(id) || compareIds.length === 4) return;
@@ -14,6 +15,7 @@ export default function useCompare() {
   const removeFromCompare = (id) => {
     if (!compareIds.includes(id)) return;
     setCompareIds(compareIds.filter((s) => s !== id));
+    setShowAlertToast(false);
   };
 
   // HANDLER
@@ -23,11 +25,15 @@ export default function useCompare() {
       return;
     }
     if (compareIds.length === 4) {
-      console.error("Limite di comparazione raggiunto");
+      setShowAlertToast(true);
+      return;
     }
     addToCompare(id);
   };
 
+  const resetAlertToast = () => {
+    setShowAlertToast(false);
+  };
   // MULTI DETAILED GET
   async function getComparingList(ids) {
     const promises = ids.map(async (id) => {
@@ -39,12 +45,13 @@ export default function useCompare() {
     const result = await Promise.all(promises);
     return result.map((r) => r.service);
   }
-
   return {
     compareIds,
     addToCompare,
     removeFromCompare,
     handleAddToCompare,
     getComparingList,
+    showAlertToast,
+    resetAlertToast,
   };
 }

@@ -4,18 +4,25 @@ import { useEffect, useState, useRef } from "react";
 // components
 import FastCompare from "../components/FastCompare";
 import { useThemeContext } from "../contexts/ThemeContext";
+import Toast from "../components/Toast";
 
 export default function DefaultLayout() {
-  const { compareIds, getComparingList, removeFromCompare } =
-    useGlobalContext();
+  // context data
+  const {
+    compareIds,
+    getComparingList,
+    removeFromCompare,
+    showAlertToast,
+    resetAlertToast,
+  } = useGlobalContext();
   const { theme, changeTheme } = useThemeContext();
-  const [itemsCompared, setItemCompared] = useState([]);
-  const [compareContainer, setCompareContainer] = useState("compare-container");
 
   const navigate = useNavigate();
   const location = useLocation();
 
   //  gestione fast compare e fetch di elementi da comparare
+  const [itemsCompared, setItemCompared] = useState([]);
+  const [compareContainer, setCompareContainer] = useState("compare-container");
   useEffect(() => {
     if (compareIds.length === 0) {
       setItemCompared([]);
@@ -47,10 +54,10 @@ export default function DefaultLayout() {
     navigate("/comparing");
   };
 
+  // gestione keyboard inputs
   const scrollRef = useRef(null);
   const openDrawerRef = useRef(null);
   const goToCompareRef = useRef(null);
-
   useEffect(() => {
     function keyClicks(e) {
       const tag = e.target.tagName;
@@ -117,55 +124,64 @@ export default function DefaultLayout() {
         <div className="page">
           <Outlet />
         </div>
-      </main>
 
-      {/* COMPARE SECTION */}
-      <button
-        ref={scrollRef}
-        className="scroll-to-top-btn"
-        style={{}}
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      >
-        Torna su <i className="fa-solid fa-angle-up redTXT"></i>
-      </button>
-      <div style={{ display: isOnComparePage ? "none" : "block" }}>
-        <div style={{ position: "relative" }}>
-          <button
-            ref={goToCompareRef}
-            onClick={toDetailedPage}
-            style={{
-              display: compareIds.length > 1 ? "block" : "none",
-            }}
-            className="compare-in-detail-btn"
-          >
-            Compara nel dettaglio{" "}
-            <i className="fa-solid fa-angle-right redTXT"></i>
-          </button>
-          <button
-            ref={openDrawerRef}
-            onClick={handleVisible}
-            className="compare-container-visibility"
-            style={{
-              display: compareIds.length > 0 ? "block" : "none",
-            }}
-          >
-            {compareContainer === "compare-container" ? (
-              <span>
-                Apri <i className="fa-solid fa-angle-up redTXT"></i>
-              </span>
-            ) : (
-              <span>
-                Chiudi <i className="fa-solid fa-angle-down redTXT"></i>
-              </span>
-            )}
-          </button>
+        {/* COMPARE SECTION */}
+        <button
+          ref={scrollRef}
+          className="scroll-to-top-btn"
+          style={{}}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          Torna su <i className="fa-solid fa-angle-up redTXT"></i>
+        </button>
+        <div style={{ display: isOnComparePage ? "none" : "block" }}>
+          <div style={{ position: "relative" }}>
+            <button
+              ref={goToCompareRef}
+              onClick={toDetailedPage}
+              style={{
+                display: compareIds.length > 1 ? "block" : "none",
+              }}
+              className="compare-in-detail-btn"
+            >
+              Compara nel dettaglio{" "}
+              <i className="fa-solid fa-angle-right redTXT"></i>
+            </button>
+            <button
+              ref={openDrawerRef}
+              onClick={handleVisible}
+              className="compare-container-visibility"
+              style={{
+                display: compareIds.length > 0 ? "block" : "none",
+              }}
+            >
+              {compareContainer === "compare-container" ? (
+                <span>
+                  Apri comparatore rapido{" "}
+                  <i className="fa-solid fa-angle-up redTXT"></i>
+                </span>
+              ) : (
+                <span>
+                  Chiudi comparatore rapido{" "}
+                  <i className="fa-solid fa-angle-down redTXT"></i>
+                </span>
+              )}
+            </button>
+          </div>
+          <FastCompare
+            visibility={compareContainer}
+            list={itemsCompared}
+            remove={removeFromCompare}
+          ></FastCompare>
         </div>
-        <FastCompare
-          visibility={compareContainer}
-          list={itemsCompared}
-          remove={removeFromCompare}
-        ></FastCompare>
-      </div>
+        {showAlertToast && (
+          <Toast
+            message={"Limite raggiunto"}
+            show={showAlertToast}
+            onClose={resetAlertToast}
+          ></Toast>
+        )}
+      </main>
     </>
   );
 }

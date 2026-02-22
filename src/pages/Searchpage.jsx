@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback, useEffect } from "react";
+import { useMemo, useState, useCallback, useEffect, useRef } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useNavigate } from "react-router-dom";
 import { debounce } from "../assets/utils";
@@ -51,6 +51,8 @@ export default function Searchpage() {
     };
   }, []);
 
+  const categorySelectRef = useRef(null);
+
   // RENDER ZZZZZONE --------------------------------
   return (
     <>
@@ -65,14 +67,15 @@ export default function Searchpage() {
         <div>
           {/* filtro categoria */}
           <select
+            ref={categorySelectRef}
             name={categories}
             onChange={(e) => handleCategory(e.target.value)}
           >
             <option value={""}>Seleziona una categoria</option>
-            {categories?.length > 0 &&
+            {categories.length > 0 &&
               categories.map((c, i) => {
                 return (
-                  <option value={c} key={i}>
+                  <option value={c.toLowerCase()} key={i}>
                     {c}
                   </option>
                 );
@@ -101,11 +104,24 @@ export default function Searchpage() {
       {memoedServices.length > 0 ? (
         <ul className="services-list">
           {memoedServices.map((s) => (
+            // titolo e categoria
             <li key={s.id}>
               <p>
-                {s.title}
-                <span style={{ color: "lightgray" }}>/{s.category}</span>
+                <span onClick={() => navigate(`/services/${s.id}`)}>
+                  {s.title}
+                </span>
+                <span
+                  style={{ color: "lightgray" }}
+                  onClick={() => {
+                    categorySelectRef.current.value = s.category;
+                    handleCategory(s.category);
+                  }}
+                >
+                  /{s.category}
+                </span>
               </p>
+
+              {/* buttons */}
               <ComparaBtn id={s.id} />
               <button onClick={() => navigate(`/services/${s.id}`)}>
                 Dettagli

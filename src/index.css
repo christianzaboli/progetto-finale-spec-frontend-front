@@ -230,6 +230,9 @@ select option:hover {
   display: flex;
   justify-content: space-between;
   padding-right: 5rem;
+  span:nth-child(1) {
+    cursor: pointer;
+  }
 }
 
 button {
@@ -641,6 +644,78 @@ footer {
   margin: 20px 0 0 0;
   translate: -50% 0;
 }
+.toast-container {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 2000;
+  animation: slideIn 0.15s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translatey(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translatey(0);
+    opacity: 1;
+  }
+}
+
+.toast {
+  background: var(--input-bga);
+  border: 1px solid var(--accent-red);
+  color: var(--accent-red);
+  padding: 16px 20px;
+  box-shadow: 0 4px 24px var(--table-sticky-shadow);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 400px;
+  position: relative;
+  cursor: pointer;
+}
+
+.toast-icon {
+  font-size: 1.4rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.toast-message {
+  flex: 1;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  transition: transform 0.15s;
+  flex-shrink: 0;
+}
+
+.toast-close:hover {
+  transform: scale(1.1);
+}
+@media (max-width: 480px) {
+  .toast-container {
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    z-index: 2000;
+    animation: slideIn 0.3s ease-out;
+  }
+}
 @media (max-width: 900px) {
   .favList {
     grid-template-columns: repeat(2, 1fr);
@@ -660,10 +735,6 @@ footer {
 
   .fast-compare-item {
     flex-basis: 250px;
-  }
-
-  .page table {
-    /* min-width: 720px; */
   }
 
   .page table td:first-child {

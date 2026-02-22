@@ -32,6 +32,8 @@ export default function GlobalProvider({ children }) {
     removeFromCompare,
     handleAddToCompare,
     getComparingList,
+    showAlertToast,
+    resetAlertToast,
   } = useCompare();
 
   // favorites hook
@@ -60,6 +62,8 @@ export default function GlobalProvider({ children }) {
         removeFromCompare,
         handleAddToCompare,
         getComparingList,
+        showAlertToast,
+        resetAlertToast,
 
         //useStorage()
         favs,
