@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchServiceApi } from "../assets/utils";
+import { fetchServiceApi } from "../libs/utils";
 
 const API_URL = import.meta.env.VITE_API_URL;
 export default function useService() {

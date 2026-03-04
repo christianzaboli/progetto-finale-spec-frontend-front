@@ -5,6 +5,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 export default function useCompare() {
   const [compareIds, setCompareIds] = useSessionStorage("compareIds", []);
   const [showAlertToast, setShowAlertToast] = useState(false);
+
   // ADD
   const addToCompare = (id) => {
     if (compareIds.includes(id) || compareIds.length === 4) return;
@@ -36,14 +37,18 @@ export default function useCompare() {
   };
   // MULTI DETAILED GET
   async function getComparingList(ids) {
-    const promises = ids.map(async (id) => {
-      const res = await fetch(`${API_URL}/services/${id}`);
-      if (!res.ok) throw new Error(`Errore nel fetch di servizio ${id}`);
-      const obj = await res.json();
-      return obj;
-    });
-    const result = await Promise.all(promises);
-    return result.map((r) => r.service);
+    try {
+      const promises = ids.map(async (id) => {
+        const res = await fetch(`${API_URL}/services/${id}`);
+        if (!res.ok) throw new Error(`Errore nel fetch di servizio ${id}`);
+        const obj = await res.json();
+        return obj;
+      });
+      const result = await Promise.all(promises);
+      return result.map((r) => r.service);
+    } catch (error) {
+      console.error(error);
+    }
   }
   return {
     compareIds,

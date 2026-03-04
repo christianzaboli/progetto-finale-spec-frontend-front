@@ -1,8 +1,8 @@
 import { useMemo, useState, useCallback, useEffect, useRef } from "react";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { useNavigate } from "react-router-dom";
-import { debounce } from "../assets/utils";
-import ComparaBtn from "../components/ComparaBtn";
+import { debounce } from "../libs/utils";
+import GenericButton from "../components/GenericButton";
 export default function Searchpage() {
   const navigate = useNavigate();
 
@@ -16,6 +16,8 @@ export default function Searchpage() {
     categoryFilter,
     handleQuery,
     handleCategory,
+    compareIds,
+    handleAddToCompare,
   } = useGlobalContext();
 
   // attivazione useCallback + debounce
@@ -120,20 +122,30 @@ export default function Searchpage() {
                   /{s.category}
                 </span>
               </p>
-
               {/* buttons */}
-              <ComparaBtn id={s.id} />
-              <button onClick={() => navigate(`/services/${s.id}`)}>
-                Dettagli
-              </button>
-              <button onClick={() => handleFavorites(s.id)}>
-                <i
-                  className="fa-solid fa-heart"
-                  style={{
-                    color: favs.includes(s.id) && "red",
-                  }}
-                ></i>
-              </button>
+              <GenericButton
+                labelName="Compara"
+                labelClasses="compare-btn-label"
+                btnClasses="compare-btn"
+                type="checkbox"
+                checked={compareIds.includes(s.id)}
+                onChange={() => handleAddToCompare(s.id)}
+              />
+              <GenericButton
+                onClick={() => navigate(`/services/${s.id}`)}
+                children="Dettagli"
+              />
+              <GenericButton
+                onClick={() => handleFavorites(s.id)}
+                children={
+                  <i
+                    className="fa-solid fa-heart"
+                    style={{
+                      color: favs.includes(s.id) && "red",
+                    }}
+                  ></i>
+                }
+              />
             </li>
           ))}
         </ul>
