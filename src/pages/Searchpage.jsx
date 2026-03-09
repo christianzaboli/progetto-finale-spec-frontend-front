@@ -58,7 +58,7 @@ export default function Searchpage() {
   // RENDER ZZZZZONE --------------------------------
   return (
     <>
-      <h1>Benvenuto nel comparatore!</h1>
+      <h1>Cerca, filtra e compara servizi streaming</h1>
       <div>
         {/* ricerca */}
         <input

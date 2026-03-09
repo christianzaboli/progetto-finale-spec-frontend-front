@@ -13,9 +13,27 @@
     <li>Confrontare fino a 4 elementi</li>
   </ul>
 
+  ---
+  <p align="center">
+    <img src="./preview/fullpreview.gif" width="800"/>
+  </p>
+
   <p>
     Il progetto simula l’esperienza di un utente non autenticato che interagisce con un backend REST già fornito.
   </p>
+
+  <h2 align="center">Homepage</h2>
+
+  <p align="center">
+    <img src="./preview/homepage.png" width="800"/>
+  </p>
+
+  <h2 align="center">Comparatore</h2>
+
+  <p align="center">
+    <img src="./preview/comparatore.png" width="800"/>
+  </p>
+
 
   <h2>Stack</h2>
 
@@ -101,7 +119,7 @@ VITE_API_URL=http://localhost:3001
   <hr>
 
   <p>
-    Christian Zaboli<br>
+    Christian Zaboli Vedovi<br>
     Progetto finale – React Specialization
   </p>
 
